@@ -56,58 +56,6 @@ coerce 'Net::PMP::Type::ValidDates' => from 'HashRef' => via {
     $_;
 };
 
-# links
-my $coerce_link = sub {
-
-    # defer till runtime to avoid circular dependency
-    require Net::PMP::CollectionDoc::Link;
-
-    if ( ref( $_[0] ) eq 'HASH' ) {
-        return Net::PMP::CollectionDoc::Link->new( $_[0] );
-    }
-    elsif ( blessed $_[0] ) {
-        return $_[0];
-    }
-    else {
-        return Net::PMP::CollectionDoc::Link->new( href => $_[0] );
-    }
-};
-subtype 'Net::PMP::Type::Link' =>
-    as class_type('Net::PMP::CollectionDoc::Link');
-coerce 'Net::PMP::Type::Link' => from 'Any' => via { $coerce_link->($_) };
-subtype 'Net::PMP::Type::Links' => as 'ArrayRef[Net::PMP::Type::Link]';
-coerce 'Net::PMP::Type::Links' => from 'ArrayRef' => via {
-    [ map { $coerce_link->($_) } @$_ ];
-} => from 'HashRef' => via { [ $coerce_link->($_) ] } => from 'Any' =>
-    via { [ $coerce_link->($_) ] };
-
-# permission links (special link case)
-my $coerce_permission = sub {
-
-    # defer till runtime to avoid circular dependency
-    require Net::PMP::CollectionDoc::Permission;
-
-    if ( ref( $_[0] ) eq 'HASH' ) {
-        return Net::PMP::CollectionDoc::Permission->new( $_[0] );
-    }
-    elsif ( blessed $_[0] ) {
-        return $_[0];
-    }
-    else {
-        return Net::PMP::CollectionDoc::Permission->new( href => $_[0] );
-    }
-};
-subtype 'Net::PMP::Type::Permission' =>
-    as class_type('Net::PMP::CollectionDoc::Permission');
-coerce 'Net::PMP::Type::Permission' => from 'Any' =>
-    via { $coerce_permission->($_) };
-subtype 'Net::PMP::Type::Permissions' => as
-    'ArrayRef[Net::PMP::Type::Permission]';
-coerce 'Net::PMP::Type::Permissions' => from 'ArrayRef' => via {
-    [ map { $coerce_permission->($_) } @$_ ];
-} => from 'HashRef' => via { [ $coerce_permission->($_) ] } => from 'Any' =>
-    via { [ $coerce_permission->($_) ] };
-
 # Content types
 use Media::Type::Simple qw(is_type);
 
@@ -117,12 +65,6 @@ subtype 'Net::PMP::Type::MediaType' => as 'Str' => where {
 } => message {
     "The value ($_) does not appear to be a valid media type.";
 };
-
-# URIs
-use Data::Validate::URI qw(is_uri);
-subtype 'Net::PMP::Type::Href' => as 'Str' => where {
-    is_uri($_);
-} => message {"Value ($_) is not a valid href."};
 
 # MediaEnclosure
 my $coerce_enclosure = sub {
