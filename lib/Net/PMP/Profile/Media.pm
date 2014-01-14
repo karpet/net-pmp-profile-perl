@@ -78,7 +78,7 @@ Peter Karman, C<< <pkarman at cpan.org> >>
 =head1 BUGS
 
 Please report any bugs or feature requests to C<bug-net-pmp at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Net-PMP>.  I will be notified, and then you'll
+the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Net-PMP-Profile>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
 
@@ -99,19 +99,19 @@ Join #pmp on L<http://freenode.net>.
 
 =item * RT: CPAN's request tracker (report bugs here)
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Net-PMP>
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Net-PMP-Profile>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/Net-PMP>
+L<http://annocpan.org/dist/Net-PMP-Profile>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/Net-PMP>
+L<http://cpanratings.perl.org/d/Net-PMP-Profile>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/dist/Net-PMP/>
+L<http://search.cpan.org/dist/Net-PMP-Profile/>
 
 =back
 
