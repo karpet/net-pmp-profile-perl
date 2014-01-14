@@ -1,7 +1,7 @@
 package Net::PMP::Profile::Media;
 use Mouse;
 extends 'Net::PMP::Profile';
-use Net::PMP::MediaEnclosure;
+use Net::PMP::Profile::MediaEnclosure;
 
 our $VERSION = '0.001';
 
@@ -65,7 +65,7 @@ This class extends L<Net::PMP::Profile>. Only new or overridden methods are docu
 
 =head2 enclosure
 
-Required array of hashrefs or Net::PMP::MediaEnclosure objects representing the binary file of the media asset.
+Required array of hashrefs or Net::PMP::Profile::MediaEnclosure objects representing the binary file of the media asset.
 
 =head2 get_profile_url
 

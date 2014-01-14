@@ -128,15 +128,15 @@ subtype 'Net::PMP::Type::Href' => as 'Str' => where {
 my $coerce_enclosure = sub {
 
     # defer till runtime to avoid circular dependency
-    require Net::PMP::MediaEnclosure;
+    require Net::PMP::Profile::MediaEnclosure;
 
     if ( ref( $_[0] ) eq 'HASH' ) {
-        return Net::PMP::MediaEnclosure->new( $_[0] );
+        return Net::PMP::Profile::MediaEnclosure->new( $_[0] );
     }
     else { return $_[0]; }
 };
 subtype 'Net::PMP::Type::MediaEnclosure' =>
-    as class_type('Net::PMP::MediaEnclosure');
+    as class_type('Net::PMP::Profile::MediaEnclosure');
 coerce 'Net::PMP::Type::MediaEnclosure' => from 'Any' =>
     via { $coerce_enclosure->($_) };
 subtype 'Net::PMP::Type::MediaEnclosures' => as
@@ -161,7 +161,7 @@ Net::PMP::CollectionDoc::Link - link from a Net::PMP::CollectionDoc::Links objec
 
  package My::Class;
  use Mouse;
- use Net::PMP::TypeConstraints;
+ use Net::PMP::Profile::TypeConstraints;
 
  # provide validation checking
  has 'uri' => (isa => 'Net::PMP::Type::Href');
@@ -170,7 +170,7 @@ Net::PMP::CollectionDoc::Link - link from a Net::PMP::CollectionDoc::Links objec
 
 =head1 DESCRIPTION
 
-Net::PMP::TypeConstraints defines validation constraints for Net::PMP classes.
+Net::PMP::Profile::TypeConstraints defines validation constraints for Net::PMP classes.
 This is a utility class defining types with L<Mouse::Util::TypeConstraints>
 in the C<Net::PMP::Type> namespace.
 
