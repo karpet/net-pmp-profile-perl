@@ -19,6 +19,7 @@ has 'valid' =>
 has 'tags'        => ( is => 'rw', isa => 'ArrayRef[Str]', );
 has 'description' => ( is => 'rw', isa => 'Str', );
 has 'byline'      => ( is => 'rw', isa => 'Str', );
+has 'guid'        => ( is => 'rw', isa => 'Net::PMP::Type::GUID', );
 
 # links
 has 'author' => ( is => 'rw', isa => 'Net::PMP::Type::Links', coerce => 1, );
