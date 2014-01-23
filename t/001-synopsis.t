@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 30;
+use Test::More tests => 33;
 use Data::Dump qw( dump );
 
 use_ok('Net::PMP::Profile');
@@ -246,3 +246,14 @@ is_deeply(
     },
     "links detected"
 );
+
+is( Net::PMP::Profile::Media->get_type_from_uri('foo.jpg'),
+    'image/jpeg', "get jpg type from uri path" );
+is( Net::PMP::Profile::Media->get_type_from_uri('http://bar.com/foo.jpg'),
+    'image/jpeg', "get jpg type from full uri" );
+is( Net::PMP::Profile::Media->get_type_from_uri(
+        'http://bar.com/foo.jpg?color=blue'),
+    'image/jpeg',
+    "get jpg type from full uri"
+);
+

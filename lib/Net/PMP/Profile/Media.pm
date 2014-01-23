@@ -2,6 +2,7 @@ package Net::PMP::Profile::Media;
 use Mouse;
 extends 'Net::PMP::Profile';
 use Net::PMP::Profile::MediaEnclosure;
+use Media::Type::Simple;
 
 our $VERSION = '0.001';
 
@@ -13,6 +14,14 @@ has 'enclosure' => (
 );
 
 sub get_profile_url {'https://api.pmp.io/profiles/media'}
+
+sub get_type_from_uri {
+    my $self = shift;
+    my $uri = shift or confess "uri required";
+    $uri =~ s/\?.*//;
+    $uri =~ s/.+\.(\w+)$/$1/;
+    return type_from_ext($uri);
+}
 
 1;
 
@@ -70,6 +79,11 @@ Required array of hashrefs or Net::PMP::Profile::MediaEnclosure objects represen
 =head2 get_profile_url
 
 Returns a string for the PMP profile's URL.
+
+=head2 get_type_from_uri( I<uri> )
+
+Returns MIME type for I<uri>. Uses L<Media::Type::Simple> and assumes I<uri> has a recognizable filename
+extension.
 
 =head1 AUTHOR
 
