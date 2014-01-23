@@ -20,7 +20,12 @@ sub get_type_from_uri {
     my $uri = shift or confess "uri required";
     $uri =~ s/\?.*//;
     $uri =~ s/.+\.(\w+)$/$1/;
-    return type_from_ext($uri);
+    my $type;
+    eval { $type = type_from_ext($uri); };
+    if ( $@ or !$type ) {
+        confess $@;    # re-throw with full stack trace
+    }
+    return $type;
 }
 
 1;
