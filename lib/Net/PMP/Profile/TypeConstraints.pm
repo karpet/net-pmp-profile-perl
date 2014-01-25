@@ -97,7 +97,7 @@ __END__
 
 =head1 NAME
 
-Net::PMP::CollectionDoc::Link - link from a Net::PMP::CollectionDoc::Links object
+Net::PMP::Profile::TypeConstraints - enforce attribute values
 
 =head1 SYNOPSIS
 
