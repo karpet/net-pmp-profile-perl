@@ -3,6 +3,7 @@ use Mouse;
 extends 'Net::PMP::Profile';
 use Net::PMP::Profile::MediaEnclosure;
 use Media::Type::Simple;
+use Try::Tiny;
 
 our $VERSION = '0.001';
 
@@ -20,11 +21,12 @@ sub get_type_from_uri {
     my $uri = shift or confess "uri required";
     $uri =~ s/\?.*//;
     $uri =~ s/.+\.(\w+)$/$1/;
-    my $type;
-    eval { $type = type_from_ext($uri); };
-    if ( $@ or !$type ) {
-        confess $@;    # re-throw with full stack trace
+    my $type = try {
+        type_from_ext($uri);
     }
+    catch {
+        confess $_;    # re-throw with full stack trace
+    };
     return $type;
 }
 

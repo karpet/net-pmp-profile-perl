@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More tests => 36;
+use Test::Exception;
 use Data::Dump qw( dump );
 
 use_ok('Net::PMP::Profile');
@@ -32,50 +33,45 @@ ok( my $profile_doc = Net::PMP::Profile->new(
 );
 
 # validation
-eval {
+throws_ok {
     my $bad_date = Net::PMP::Profile->new(
         title     => 'test bad date',
         published => 'no way date',
     );
-};
+}
+qr/Invalid date format/i, "bad date constructor";
 
-like( $@, qr/Invalid date format/i, "bad date constructor" );
-
-eval {
+throws_ok {
     my $bad_locale = Net::PMP::Profile->new(
         title    => 'bad locale',
         hreflang => 'ENGLISH',
     );
-};
+}
+qr/not a valid ISO639-1 value/, "bad hreflang constructor";
 
-like( $@, qr/not a valid ISO639-1 value/, "bad hreflang constructor" );
-
-eval {
+throws_ok {
     my $bad_valid = Net::PMP::Profile->new(
         title => 'bad valid date',
         valid => { from => 'now', to => 'then' },
     );
-};
+}
+qr/Invalid date format/i, "bad valid date";
 
-like( $@, qr/Invalid date format/i, "bad valid date" );
-
-eval {
+throws_ok {
     my $bad_valid = Net::PMP::Profile->new(
         title => 'bad valid date missing key',
         valid => { to => 'then' },
     );
-};
+}
+qr/must contain/i, "bad valid date missing key";
 
-like( $@, qr/must contain/i, "bad valid date missing key" );
-
-eval {
+throws_ok {
     my $bad_author = Net::PMP::Profile->new(
         title  => 'bad author',
         author => [qw( /foo/bar )],
     );
-};
-
-like( $@, qr/not a valid href/, "bad author href" );
+}
+qr/not a valid href/, "bad author href";
 
 ok( my $coll_doc = $profile_doc->as_doc(), "profile->as_doc" );
 ok( $coll_doc->isa('Net::PMP::CollectionDoc'), "coll_doc isa CollectionDoc" );
@@ -135,7 +131,9 @@ ok( my $audio = Net::PMP::Profile::Audio->new(
         title       => 'i am a piece of audio',
         description => 'hear me',
         enclosure   => [
-            { href => 'http://mpr.org/some/audio.mp3', type => 'audio/mpeg' },
+            {   href => 'http://mpr.org/some/audio.mp3',
+                type => 'audio/mpeg'
+            },
         ]
     ),
     "audio constructor"
@@ -160,49 +158,45 @@ is_deeply(
     "Media enclosure recognized as link"
 );
 
-eval {
+throws_ok {
     my $audio = Net::PMP::Profile::Audio->new(
         title     => 'bad audio enclosure',
         enclosure => 'foo'
     );
-};
-
-like(
-    $@,
-    qr/Validation failed for 'Net::PMP::Type::MediaEnclosures'/,
-    "bad audio enclosure - string"
-);
+}
+qr/Validation failed for 'Net::PMP::Type::MediaEnclosures'/,
+    "bad audio enclosure - string";
 
 ok( my $audio_single_enclosure = Net::PMP::Profile::Audio->new(
-        title => 'bad audio enclosure',
-        enclosure =>
-            { href => 'http://mpr.org/some/audio.mp3', type => 'audio/mpeg' },
+        title     => 'bad audio enclosure',
+        enclosure => {
+            href => 'http://mpr.org/some/audio.mp3',
+            type => 'audio/mpeg'
+        },
     ),
     "audio constructor with single enclosure"
 );
 
-eval {
+throws_ok {
     my $audio = Net::PMP::Profile::Audio->new(
-        title => 'bad audio enclosure',
-        enclosure =>
-            [ { href => 'http://mpr.org/some/audio.mp3', type => 'foo' }, ],
+        title     => 'bad audio enclosure',
+        enclosure => [
+            {   href => 'http://mpr.org/some/audio.mp3',
+                type => 'foo'
+            },
+        ],
     );
-};
+}
+qr/does not appear to be a valid media type/,
+    "bad audio enclosure - content type";
 
-like(
-    $@,
-    qr/does not appear to be a valid media type/,
-    "bad audio enclosure - content type"
-);
-
-eval {
+throws_ok {
     my $audio = Net::PMP::Profile::Audio->new(
         title     => 'bad audio enclosure',
         enclosure => [ { href => 'audio.mp3', type => 'audio/mpeg' }, ],
     );
-};
-
-like( $@, qr/is not a valid href/, "bad audio enclosure - href" );
+}
+qr/is not a valid href/, "bad audio enclosure - href";
 
 # subclassing
 

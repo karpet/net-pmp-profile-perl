@@ -9,6 +9,7 @@ all_from 'lib/Net/PMP/Profile.pm';
 
 requires 'Mouse'                       => 0;
 requires 'Test::More'                  => 0;
+requires 'Test::Exception'             => 0;
 requires 'Net::PMP'                    => 0;
 requires 'URI'                         => 0;
 requires 'URI::Template'               => 0;
