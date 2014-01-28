@@ -16,7 +16,12 @@ has 'published' =>
     ( is => 'rw', isa => 'Net::PMP::Type::DateTimeOrStr', coerce => 1, );
 has 'valid' =>
     ( is => 'rw', isa => 'Net::PMP::Type::ValidDates', coerce => 1, );
-has 'tags'        => ( is => 'rw', isa => 'ArrayRef[Str]', );
+has 'tags' => (
+    is      => 'rw',
+    isa     => 'ArrayRef[Str]',
+    traits  => ['Array'],
+    handles => { add_tag => 'push', },
+);
 has 'description' => ( is => 'rw', isa => 'Str', );
 has 'byline'      => ( is => 'rw', isa => 'Str', );
 has 'guid'        => ( is => 'rw', isa => 'Net::PMP::Type::GUID', );

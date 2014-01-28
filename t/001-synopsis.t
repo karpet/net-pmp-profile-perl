@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 33;
+use Test::More tests => 36;
 use Data::Dump qw( dump );
 
 use_ok('Net::PMP::Profile');
@@ -257,3 +257,8 @@ is( Net::PMP::Profile::Media->get_type_from_uri(
     "get jpg type from full uri"
 );
 
+# tags array magic
+ok( my $tag_magic = My::Profile->new( title => 'tag magic', tags => ['foo'] ),
+    "tag_magic" );
+ok( $tag_magic->add_tag('bar'), "add_tag" );
+is_deeply( $tag_magic->tags, [ 'foo', 'bar' ], "tag magic push works" );
