@@ -186,6 +186,10 @@ Optional summary string.
 
 Optional keyword array of strings.
 
+=head2 add_tag( I<tagname> )
+
+Push I<tagname> onto the array.
+
 =head2 as_doc
 
 Returns a L<Net::PMP::CollectionDoc> object suitable for L<Net::PMP::Client> interaction.
