@@ -22,7 +22,7 @@ sub get_type_from_uri {
     $uri =~ s/\?.*//;
     $uri =~ s/.+\.(\w+)$/$1/;
     my $type = try {
-        type_from_ext($uri);
+        type_from_ext( lc $uri );
     }
     catch {
         confess $_;    # re-throw with full stack trace
