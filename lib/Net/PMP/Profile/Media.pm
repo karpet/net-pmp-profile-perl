@@ -30,6 +30,12 @@ sub get_type_from_uri {
     return $type;
 }
 
+sub get_urn {
+    my $self = shift;
+    ( my $profile_name = $self->get_profile_url ) =~ s,^.+/,,;
+    return 'urn:collectiondoc:' . $profile_name;
+}
+
 1;
 
 __END__
@@ -86,6 +92,10 @@ Required array of hashrefs or Net::PMP::Profile::MediaEnclosure objects represen
 =head2 get_profile_url
 
 Returns a string for the PMP profile's URL.
+
+=head2 get_urn
+
+Returns a string for the PMP link rels attribute. Defaults to C<urn:collectiondoc:>I<profile_name>.
 
 =head2 get_type_from_uri( I<uri> )
 
