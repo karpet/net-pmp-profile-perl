@@ -1,6 +1,6 @@
 package Net::PMP::Profile::TypeConstraints;
-use Mouse;
-use Mouse::Util::TypeConstraints;
+use Moose;
+use Moose::Util::TypeConstraints;
 
 # The Net::PMP::Type::* prefix is used for all our type constraints
 # to avoid stepping on anyone's toes
@@ -87,7 +87,7 @@ coerce 'Net::PMP::Type::MediaEnclosures' => from 'ArrayRef[HashRef]' => via {
     [ map { $coerce_enclosure->($_) } @$_ ];
 } => from 'HashRef' => via { [ $coerce_enclosure->($_) ] };
 
-no Mouse::Util::TypeConstraints;
+no Moose::Util::TypeConstraints;
 
 __PACKAGE__->meta->make_immutable();
 
@@ -102,7 +102,7 @@ Net::PMP::Profile::TypeConstraints - enforce attribute values
 =head1 SYNOPSIS
 
  package My::Class;
- use Mouse;
+ use Moose;
  use Net::PMP::Profile::TypeConstraints;
 
  # provide validation checking
@@ -113,7 +113,7 @@ Net::PMP::Profile::TypeConstraints - enforce attribute values
 =head1 DESCRIPTION
 
 Net::PMP::Profile::TypeConstraints defines validation constraints for Net::PMP classes.
-This is a utility class defining types with L<Mouse::Util::TypeConstraints>
+This is a utility class defining types with L<Moose::Util::TypeConstraints>
 in the C<Net::PMP::Type> namespace.
 
 =head1 AUTHOR

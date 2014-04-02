@@ -1,10 +1,12 @@
 package Net::PMP::Profile::Video;
-use Mouse;
+use Moose;
 extends 'Net::PMP::Profile::Media';
 
 our $VERSION = '0.001';
 
 sub get_profile_url {'https://api.pmp.io/profiles/video'}
+
+__PACKAGE__->meta->make_immutable();
 
 1;
 

@@ -1,5 +1,5 @@
 package Net::PMP::Profile::Story;
-use Mouse;
+use Moose;
 extends 'Net::PMP::Profile';
 
 our $VERSION = '0.001';
@@ -9,6 +9,8 @@ has 'contentencoded'   => ( is => 'rw', isa => 'Str', );
 has 'contenttemplated' => ( is => 'rw', isa => 'Str', );
 
 sub get_profile_url {'https://api.pmp.io/profiles/story'}
+
+__PACKAGE__->meta->make_immutable();
 
 1;
 

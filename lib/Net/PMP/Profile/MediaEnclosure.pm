@@ -1,5 +1,5 @@
 package Net::PMP::Profile::MediaEnclosure;
-use Mouse;
+use Moose;
 use Net::PMP::Profile::TypeConstraints;
 
 our $VERSION = '0.01';
@@ -7,7 +7,7 @@ our $VERSION = '0.01';
 has 'href' => ( is => 'rw', isa => 'Net::PMP::Type::Href', required => 1, );
 has 'type' =>
     ( is => 'rw', isa => 'Net::PMP::Type::MediaType', required => 1, );
-has 'meta'       => ( is => 'rw', isa => 'HashRef', );
+has 'media_meta' => ( is => 'rw', isa => 'HashRef', );
 has 'crop'       => ( is => 'rw', isa => 'Str', );
 has 'width'      => ( is => 'rw', isa => 'Int', );
 has 'height'     => ( is => 'rw', isa => 'Int', );
@@ -15,6 +15,8 @@ has 'resolution' => ( is => 'rw', isa => 'Float', );
 has 'codec'      => ( is => 'rw', isa => 'Str', );
 has 'format'     => ( is => 'rw', isa => 'Str', );
 has 'duration'   => ( is => 'rw', isa => 'Int', );
+
+__PACKAGE__->meta->make_immutable();
 
 1;
 
@@ -35,7 +37,7 @@ Net::PMP::Profile::MediaEnclosure - Rich Media representation for PMP Collection
      width       => 100,
      height      => 150',
      resolutionn => 102, # PPI
-     meta        => { foo => 'bar' },
+     media_meta  => { foo => 'bar' },
  );
 
  my $audio = Net::PMP::Profile::MediaEnclosure->new( 
@@ -44,7 +46,7 @@ Net::PMP::Profile::MediaEnclosure - Rich Media representation for PMP Collection
      codec    => 'LAME3.99r',
      format   => 'MP3',
      duration => 60000, # milliseconds
-     meta     => { foo => 'bar' },
+     media_meta => { foo => 'bar' },
  );
 
  my $video = Net::PMP::Profile::MediaEnclosure->new(
@@ -53,7 +55,7 @@ Net::PMP::Profile::MediaEnclosure - Rich Media representation for PMP Collection
      codec    => 'Xvid',
      format   => 'MPEG=1',
      duration => 60000, # milliseconds
-     meta     => { foo => 'bar' },
+     media_meta => { foo => 'bar' },
  );
  
 =cut
@@ -73,9 +75,10 @@ URI string.
 
 Content type string.
 
-=head2 meta
+=head2 media_meta
 
-Hashref of arbitrary metadata.
+Hashref of arbitrary metadata. Note that the PMP schema calls this B<meta> but that word
+is a reserved method name in L<Moose>.
 
 =head2 crop
 

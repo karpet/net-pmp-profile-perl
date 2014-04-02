@@ -1,5 +1,5 @@
 package Net::PMP::Profile::Audio;
-use Mouse;
+use Moose;
 extends 'Net::PMP::Profile::Media';
 
 our $VERSION = '0.001';

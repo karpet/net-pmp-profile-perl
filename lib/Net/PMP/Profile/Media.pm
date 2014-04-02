@@ -1,5 +1,5 @@
 package Net::PMP::Profile::Media;
-use Mouse;
+use Moose;
 extends 'Net::PMP::Profile';
 use Net::PMP::Profile::MediaEnclosure;
 use Media::Type::Simple;
@@ -35,6 +35,8 @@ sub get_urn {
     ( my $profile_name = $self->get_profile_url ) =~ s,^.+/,,;
     return 'urn:collectiondoc:' . $profile_name;
 }
+
+__PACKAGE__->meta->make_immutable();
 
 1;
 

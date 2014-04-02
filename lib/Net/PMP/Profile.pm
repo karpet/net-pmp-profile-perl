@@ -1,5 +1,5 @@
 package Net::PMP::Profile;
-use Mouse;
+use Moose;
 use Data::Dump qw( dump );
 use Data::Clean::JSON;
 use Net::PMP::Profile::TypeConstraints;
@@ -106,6 +106,8 @@ sub as_doc {
     return Net::PMP::CollectionDoc->new($clean);
 
 }
+
+__PACKAGE__->meta->make_immutable();
 
 1;
 

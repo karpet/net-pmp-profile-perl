@@ -203,7 +203,7 @@ qr/is not a valid href/, "bad audio enclosure - href";
 {
 
     package My::Profile;
-    use Mouse;
+    use Moose;
     extends 'Net::PMP::Profile';
     has 'misc_links' =>
         ( is => 'rw', isa => 'Net::PMP::Type::Links', coerce => 1, );
