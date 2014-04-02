@@ -7,7 +7,7 @@ use 5.008003;
 name 'Net-PMP-Profile';
 all_from 'lib/Net/PMP/Profile.pm';
 
-requires 'Mouse'                       => 0;
+requires 'Moose'                       => 0;
 requires 'Test::More'                  => 0;
 requires 'Test::Exception'             => 0;
 requires 'Net::PMP'                    => 0;
@@ -18,7 +18,7 @@ requires 'DateTime::Format::DateParse' => 0;
 requires 'Data::Validate::URI'         => 0;
 requires 'Media::Type::Simple'         => 0;
 requires 'Data::Clean::JSON'           => 0;
-requires 'MouseX::NativeTraits'        => 0;
+requires 'MooseX::NativeTraits'        => 0;
 
 perl_version '5.8.3';
 license 'MIT';
