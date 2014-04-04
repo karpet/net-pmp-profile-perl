@@ -92,10 +92,10 @@ sub as_doc {
                 $links{$k} = [ delete $attrs{$k} ];
             }
             elsif ( $isa eq 'Net::PMP::Type::MediaEnclosures' ) {
-                $links{$k} = delete $attrs{$k};
+                $links{$k} = [ map { $_->as_hash } @{ delete $attrs{$k} } ];
             }
             elsif ( $isa eq 'Net::PMP::Type::MediaEnclosure' ) {
-                $links{$k} = [ delete $attrs{$k} ];
+                $links{$k} = [ delete( $attrs{$k} )->as_hash ];
             }
         }
     }

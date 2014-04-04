@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 36;
+use Test::More tests => 38;
 use Test::Exception;
 use Data::Dump qw( dump );
 
@@ -197,6 +197,29 @@ throws_ok {
     );
 }
 qr/is not a valid href/, "bad audio enclosure - href";
+
+# make sure enclosure aliases media_meta to meta
+ok( my $image_enclosure_with_media_meta = Net::PMP::Profile::Image->new(
+        title     => 'image with media_meta',
+        enclosure => {
+            href       => 'http://mpr.org/some.jpg',
+            type       => 'image/jpeg',
+            media_meta => { crop => 'primary' },
+        },
+    ),
+    "image with media_meta"
+);
+
+#diag( dump $image_enclosure_with_media_meta->as_doc );
+is_deeply(
+    $image_enclosure_with_media_meta->as_doc->links->{enclosure},
+    [   {   href => 'http://mpr.org/some.jpg',
+            type => 'image/jpeg',
+            meta => { crop => 'primary' },
+        }
+    ],
+    "media_meta => meta"
+);
 
 # subclassing
 

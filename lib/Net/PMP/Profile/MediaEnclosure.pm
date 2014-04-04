@@ -16,6 +16,17 @@ has 'codec'      => ( is => 'rw', isa => 'Str', );
 has 'format'     => ( is => 'rw', isa => 'Str', );
 has 'duration'   => ( is => 'rw', isa => 'Int', );
 
+sub as_hash {
+    my $self = shift;
+
+    # alias media_meta back to meta
+    my %hash = %$self;
+    if ( exists $hash{media_meta} ) {
+        $hash{meta} = delete $hash{media_meta};
+    }
+    return \%hash;
+}
+
 __PACKAGE__->meta->make_immutable();
 
 1;
@@ -107,6 +118,10 @@ Audio/video format string.
 =head2 duration
 
 Audio/video duration integer (milliseconds). E.g. 60000 == 60 seconds.
+
+=head2 as_hash
+
+Returns the object as a hashref ready to pass to L<Net::PMP::CollectionDoc>.
 
 =head1 AUTHOR
 
