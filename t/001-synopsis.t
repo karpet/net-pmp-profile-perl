@@ -13,7 +13,10 @@ use_ok('Net::PMP::Profile::Video');
 use_ok('Net::PMP::Profile::Image');
 use_ok('Net::PMP::CollectionDoc');
 
+my $guid = Net::PMP::CollectionDoc->create_guid();
 ok( my $profile_doc = Net::PMP::Profile->new(
+        href      => 'http://api.pmp.io/docs/' . $guid,
+        guid      => $guid,
         title     => 'I am A Title',
         published => '2013-12-03T12:34:56.789Z',
         valid     => {
@@ -77,6 +80,8 @@ ok( my $coll_doc = $profile_doc->as_doc(), "profile->as_doc" );
 ok( $coll_doc->isa('Net::PMP::CollectionDoc'), "coll_doc isa CollectionDoc" );
 
 #diag( dump $coll_doc );
+#diag( dump $coll_doc->as_hash );
+
 #diag( $profile_doc->published );
 
 is_deeply(
@@ -88,6 +93,7 @@ is_deeply(
         description => $profile_doc->description,
         tags        => $profile_doc->tags,
         hreflang    => $profile_doc->hreflang,
+        guid        => $profile_doc->guid,
     },
     "coll_doc attributes"
 );
@@ -108,6 +114,7 @@ is_deeply(
                 title => "Net::PMP::Profile",
             },
         ],
+        self => [ { href => $coll_doc->href } ],
     },
     "collection links"
 );
@@ -118,6 +125,8 @@ is_deeply(
 # timezone
 
 ok( my $tzdoc = Net::PMP::Profile->new(
+        guid      => $guid,
+        href      => 'http://api.pmp.io/docs/' . $guid,
         title     => 'i am a PST',
         published => '1972-03-29 06:08:00 -0700',
     ),
@@ -128,6 +137,8 @@ is( $tzdoc->as_doc->attributes->{published},
 
 # media
 ok( my $audio = Net::PMP::Profile::Audio->new(
+        guid        => $guid,
+        href        => 'http://api.pmp.io/docs/' . $guid,
         title       => 'i am a piece of audio',
         description => 'hear me',
         enclosure   => [
@@ -160,6 +171,8 @@ is_deeply(
 
 throws_ok {
     my $audio = Net::PMP::Profile::Audio->new(
+        guid      => $guid,
+        href      => 'http://api.pmp.io/docs/' . $guid,
         title     => 'bad audio enclosure',
         enclosure => 'foo'
     );
@@ -168,6 +181,8 @@ qr/Validation failed for 'Net::PMP::Type::MediaEnclosures'/,
     "bad audio enclosure - string";
 
 ok( my $audio_single_enclosure = Net::PMP::Profile::Audio->new(
+        guid      => $guid,
+        href      => 'http://api.pmp.io/docs/' . $guid,
         title     => 'bad audio enclosure',
         enclosure => {
             href => 'http://mpr.org/some/audio.mp3',
@@ -179,6 +194,8 @@ ok( my $audio_single_enclosure = Net::PMP::Profile::Audio->new(
 
 throws_ok {
     my $audio = Net::PMP::Profile::Audio->new(
+        guid      => $guid,
+        href      => 'http://api.pmp.io/docs/' . $guid,
         title     => 'bad audio enclosure',
         enclosure => [
             {   href => 'http://mpr.org/some/audio.mp3',
@@ -192,6 +209,8 @@ qr/does not appear to be a valid media type/,
 
 throws_ok {
     my $audio = Net::PMP::Profile::Audio->new(
+        guid      => $guid,
+        href      => 'http://api.pmp.io/docs/' . $guid,
         title     => 'bad audio enclosure',
         enclosure => [ { href => 'audio.mp3', type => 'audio/mpeg' }, ],
     );
@@ -200,6 +219,8 @@ qr/is not a valid href/, "bad audio enclosure - href";
 
 # make sure enclosure aliases media_meta to meta
 ok( my $image_enclosure_with_media_meta = Net::PMP::Profile::Image->new(
+        guid      => $guid,
+        href      => 'http://api.pmp.io/docs/' . $guid,
         title     => 'image with media_meta',
         enclosure => {
             href       => 'http://mpr.org/some.jpg',
@@ -236,6 +257,8 @@ ok( my $my_profile = My::Profile->new(
         misc_links => ['http://pmp.io/test'],
         permission => 'http://mpr.org/permission/granted',
         title      => 'i am a my::profile',
+        guid       => $guid,
+        href       => 'http://api.pmp.io/docs/' . $guid,
     ),
     "new My::Profile"
 );
@@ -244,7 +267,7 @@ ok( my $my_doc = $my_profile->as_doc, "my_profile->as_doc" );
 #diag( dump $my_doc );
 is_deeply(
     $my_doc->attributes,
-    { hreflang => "en", title => "i am a my::profile" },
+    { hreflang => "en", title => "i am a my::profile", guid => $guid },
     "attributes detected"
 );
 is_deeply(

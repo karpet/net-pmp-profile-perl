@@ -25,6 +25,7 @@ has 'tags' => (
 has 'description' => ( is => 'rw', isa => 'Str', );
 has 'byline'      => ( is => 'rw', isa => 'Str', );
 has 'guid'        => ( is => 'rw', isa => 'Net::PMP::Type::GUID', );
+has 'href' => ( is => 'rw', isa => 'Net::PMP::Type::Href', coerce => 1 );
 
 # links
 has 'author' => ( is => 'rw', isa => 'Net::PMP::Type::Links', coerce => 1, );
@@ -73,6 +74,9 @@ sub as_doc {
 
     my %class_attrs = map { $_->name => $_ } $self->meta->get_all_attributes;
 
+    # not an attribute, a top-level key.
+    my $href = delete $attrs{href};
+
     for my $k ( keys %attrs ) {
         if ( exists $class_attrs{$k} ) {
             my $attr = $class_attrs{$k};
@@ -101,7 +105,7 @@ sub as_doc {
     }
 
     # CollectionDoc can only work with strings
-    my %doc = ( attributes => \%attrs, links => \%links );
+    my %doc = ( href => $href, attributes => \%attrs, links => \%links );
     my $clean = $cleaner->clean_in_place( \%doc );
     return Net::PMP::CollectionDoc->new($clean);
 
