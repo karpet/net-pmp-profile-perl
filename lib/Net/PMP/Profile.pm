@@ -11,7 +11,7 @@ our $VERSION = '0.001';
 # attributes
 has 'title' => ( is => 'rw', isa => 'Str', required => 1, );
 has 'hreflang' =>
-    ( is => 'rw', isa => 'Net::PMP::Type::ISO6391', default => 'en', );
+    ( is => 'rw', isa => 'Net::PMP::Type::ISO6391', default => sub {'en'}, );
 has 'published' =>
     ( is => 'rw', isa => 'Net::PMP::Type::DateTimeOrStr', coerce => 1, );
 has 'valid' =>
@@ -105,8 +105,14 @@ sub as_doc {
     }
 
     # CollectionDoc can only work with strings
-    my %doc = ( href => $href, attributes => \%attrs, links => \%links );
+    my %doc = ( attributes => \%attrs, links => \%links );
+
+    # only pass href if it is set
+    $doc{href} = $href if $href;
+
+    # coerce everything into something CollectionDoc can handle.
     my $clean = $cleaner->clean_in_place( \%doc );
+
     return Net::PMP::CollectionDoc->new($clean);
 
 }

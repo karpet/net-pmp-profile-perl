@@ -15,7 +15,6 @@ use_ok('Net::PMP::CollectionDoc');
 
 my $guid = Net::PMP::CollectionDoc->create_guid();
 ok( my $profile_doc = Net::PMP::Profile->new(
-        href      => 'http://api.pmp.io/docs/' . $guid,
         guid      => $guid,
         title     => 'I am A Title',
         published => '2013-12-03T12:34:56.789Z',
@@ -114,7 +113,6 @@ is_deeply(
                 title => "Net::PMP::Profile",
             },
         ],
-        self => [ { href => $coll_doc->href } ],
     },
     "collection links"
 );
