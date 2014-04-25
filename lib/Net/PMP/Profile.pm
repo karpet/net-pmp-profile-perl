@@ -125,8 +125,19 @@ Net::PMP::Profile - Base Content Profile for PMP CollectionDoc
 
  use Net::PMP;
  use Net::PMP::Profile;
- 
+
+ # instantiate a client
+ my $client = Net::PMP->client(
+     host   => $host,
+     id     => $client_id,
+     secret => $client_secret,
+ );
+
+ # get explicit guid. otherwise one will be created for you on save.
+ my $guid = Net::PMP::CollectionDoc->create_guid(); 
  my $profile_doc = Net::PMP::Profile->new(
+     href      => $client->uri_for_doc($guid),
+     guid      => $guid,
      title     => 'I am A Title',
      published => '2013-12-03T12:34:56.789Z',
      valid     => {
@@ -141,13 +152,6 @@ Net::PMP::Profile - Base Content Profile for PMP CollectionDoc
      copyright   => [qw( http://americanpublicmedia.org/ )],
      distributor => [qw( http://api.pmp.io/organization/different-guid )],
  );
-
- # instantiate a client
- my $client = Net::PMP->client(
-     host   => $host,
-     id     => $client_id,
-     secret => $client_secret,
- ); 
 
  # save doc
  $client->save($profile_doc);
