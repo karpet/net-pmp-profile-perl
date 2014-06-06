@@ -10,7 +10,7 @@ all_from 'lib/Net/PMP/Profile.pm';
 requires 'Moose'                       => 0;
 requires 'Test::More'                  => 0;
 requires 'Test::Exception'             => 0;
-requires 'Net::PMP'                    => 0;
+requires 'Net::PMP'                    => '0.001';
 requires 'URI'                         => 0;
 requires 'URI::Template'               => 0;
 requires 'UUID::Tiny'                  => 0;
