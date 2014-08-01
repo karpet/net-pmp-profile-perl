@@ -6,7 +6,7 @@ use Net::PMP::Profile::TypeConstraints;
 use Net::PMP::CollectionDoc;
 use Net::PMP::CollectionDoc::Link;
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 # attributes
 has 'title' => ( is => 'rw', isa => 'Str', required => 1, );

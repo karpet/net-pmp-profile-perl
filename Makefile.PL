@@ -15,6 +15,7 @@ requires 'URI'                         => 0;
 requires 'URI::Template'               => 0;
 requires 'UUID::Tiny'                  => 0;
 requires 'DateTime::Format::DateParse' => 0;
+requires 'DateTime::Format::Strptime'  => 0;
 requires 'Data::Validate::URI'         => 0;
 requires 'Media::Type::Simple'         => 0;
 requires 'Data::Clean::JSON'           => 0;

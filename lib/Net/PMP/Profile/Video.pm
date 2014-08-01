@@ -2,7 +2,7 @@ package Net::PMP::Profile::Video;
 use Moose;
 extends 'Net::PMP::Profile::Media';
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 sub get_profile_url {'https://api.pmp.io/profiles/video'}
 
