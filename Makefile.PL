@@ -29,6 +29,6 @@ repository 'http://github.com/APMG/net-pmp-profile-perl';
 WriteMakefile(
     PL_FILES => {},
     dist     => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean => { FILES => '' },
+    clean => { FILES => 'Net-PMP-Profile-*.tar.gz' },
 );
 
