@@ -1,5 +1,8 @@
 Revision history for Net-PMP-Profile
 
+0.100   01 Aug 2014
+ - version bump only, to fix CPAN
+
 0.002   01 Aug 2014
  - add missing dependencies to Makefile.PL
 
