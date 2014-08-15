@@ -220,7 +220,7 @@ Returns a string for the PMP profile's title. Default is the class name.
 
 =head1 AUTHOR
 
-Peter Karman, C<< <pkarman at cpan.org> >>
+Peter Karman, C<< <karman at cpan.org> >>
 
 =head1 BUGS
 

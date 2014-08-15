@@ -125,7 +125,7 @@ Returns the object as a hashref ready to pass to L<Net::PMP::CollectionDoc>.
 
 =head1 AUTHOR
 
-Peter Karman, C<< <pkarman at cpan.org> >>
+Peter Karman, C<< <karman at cpan.org> >>
 
 =head1 BUGS
 
