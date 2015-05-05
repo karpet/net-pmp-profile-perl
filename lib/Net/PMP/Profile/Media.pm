@@ -5,7 +5,7 @@ use Net::PMP::Profile::MediaEnclosure;
 use Media::Type::Simple;
 use Try::Tiny;
 
-our $VERSION = '0.100';
+our $VERSION = '0.101';
 
 has 'enclosure' => (
     is       => 'rw',
