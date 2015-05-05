@@ -22,6 +22,12 @@ has 'tags' => (
     traits  => ['Array'],
     handles => { add_tag => 'push', },
 );
+has 'itags' => (
+    is      => 'rw',
+    isa     => 'ArrayRef[Str]',
+    traits  => ['Array'],
+    handles => { add_itag => 'push', },
+);
 has 'description' => ( is => 'rw', isa => 'Str', );
 has 'byline'      => ( is => 'rw', isa => 'Str', );
 has 'guid'        => ( is => 'rw', isa => 'Net::PMP::Type::GUID', );
@@ -47,7 +53,7 @@ sub get_profile_title { ref(shift) }
 
 # singleton for class
 my $cleaner = Data::Clean::JSON->new(
-    DateTime                              => ['stringify'],
+    DateTime                              => [ call_method => '_stringify' ],
     'Net::PMP::CollectionDoc::Link'       => [ call_method => 'as_hash' ],
     'Net::PMP::CollectionDoc::Permission' => [ call_method => 'as_hash' ],
     SCALAR                                => ['deref_scalar'],
@@ -153,6 +159,7 @@ Net::PMP::Profile - Base Content Profile for PMP CollectionDoc
      byline    => 'By: John Writer and Nancy Author',
      description => 'This is a summary of the document.',
      tags      => [qw( foo bar baz )],
+     itags     => [qw( abc123 )],
      hreflang  => 'en',  # ISO639-1 code
      author      => [qw( http://api.pmp.io/user/some-guid )],
      copyright   => [qw( http://americanpublicmedia.org/ )],
@@ -202,7 +209,15 @@ Optional summary string.
 
 Optional keyword array of strings.
 
+=head2 itags
+
+Optional array of strings for "internal" tags.
+
 =head2 add_tag( I<tagname> )
+
+Push I<tagname> onto the array.
+
+=head2 add_itag( I<tagname> )
 
 Push I<tagname> onto the array.
 
