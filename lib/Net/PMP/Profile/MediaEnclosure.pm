@@ -149,19 +149,19 @@ You can also look for information at:
 
 Join #pmp on L<http://freenode.net>.
 
-=item * RT: CPAN's request tracker (report bugs here)
+=item RT: CPAN's request tracker (report bugs here)
 
 L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Net-PMP>
 
-=item * AnnoCPAN: Annotated CPAN documentation
+=item AnnoCPAN: Annotated CPAN documentation
 
 L<http://annocpan.org/dist/Net-PMP>
 
-=item * CPAN Ratings
+=item CPAN Ratings
 
 L<http://cpanratings.perl.org/d/Net-PMP>
 
-=item * Search CPAN
+=item Search CPAN
 
 L<http://search.cpan.org/dist/Net-PMP/>
 
